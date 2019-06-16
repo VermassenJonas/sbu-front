@@ -11,6 +11,7 @@ export class Statline {
     ) { }
 
     static fromJSON(json: any): Statline {
+        console.log(json);
         const stat = new Statline(json.id, json.str, json.dex, json.con, json.wis, json.int, json.cha);
         return stat;
     }

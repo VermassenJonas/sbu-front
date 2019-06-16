@@ -31,6 +31,8 @@ export class Monster {
     public lastUpdated: Date;
 
     static fromJSON(json : any) : Monster{
+        console.log(json);
+        console.log(json.stats);
         let monster = new Monster();
         monster.id = json.id;
         monster.name = json.name;

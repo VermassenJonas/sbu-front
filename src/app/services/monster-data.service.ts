@@ -10,24 +10,25 @@ import { environment } from 'src/environments/environment';
 })
 export class MonsterDataService {
 
-  
-  public loadingError$ = new Subject<string>();
+
 
   constructor(private http: HttpClient) { }
 
 
-  get monsters(): Observable<Monster[]>{
-    return this.http.get(`${environment.apiUrl}/monsters/`).pipe(
-      catchError(error => {
-        this.loadingError$.next(error.statusText);
-        return of();
-      }),
-      tap((x: any[]) => {
-        for (const y of x) {
-          console.log(y);
-        }
-      }),
+  get monsters$(): Observable<Monster[]> {
+    return this.http.get(`${environment.apiUrl}/monster/`).pipe(
+
       map((list: any[]): Monster[] => list.map(Monster.fromJSON))
     );
+  }
+   getMonster = function(id : number) : Observable<Monster>{
+    return this.http.get(`${environment.apiUrl}/monster/`).pipe(
+    );
+  }
+  addNewMonster(monster: Monster) {
+    return this.http.post(`${environment.apiUrl}/monster/`, monster.toJSON());
+  }
+  updateMonster(monster: Monster) {
+    return this.http.put(`${environment.apiUrl}/monster/${monster.id}`, monster.toJSON());
   }
 }
