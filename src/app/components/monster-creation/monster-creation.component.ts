@@ -5,7 +5,6 @@ import { MonsterDataService } from 'src/app/services/monster-data.service';
 import { Observable } from 'rxjs';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { transitiveScopesFor } from '@angular/core/src/render3/jit/module';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-monster-creation',
@@ -26,15 +25,13 @@ export class MonsterCreationComponent implements OnInit {
 
 
 
-  
-  private _monster$ : Observable<Monster>;
-  public get monster$() : Observable<Monster> {
-    return this._monster$;
+  private _monster: Monster;
+  public get monster(): Monster {
+    return this._monster;
   }
-  public set monster$(v : Observable<Monster>) {
-    this._monster$ = v;
+  public set monster(v: Monster) {
+    this._monster = v;
   }
-  
 
 
 
@@ -51,59 +48,78 @@ export class MonsterCreationComponent implements OnInit {
   ngOnInit() {
     this.id = parseInt(this.route.snapshot.paramMap.get("id"));
 
-    this.monster$ = this.monsterDataService.getMonster(this.id);
-    this.monster$.pipe(
-      tap(monster => this.monsterForm.patchValue(monster))
-    );
+    this.monsterDataService.getMonster(this.id).subscribe(result => {
+      this.monster = result[0];
+      this.buildForm();
+    });
   }
 
   buildForm() {
-
-
     this.monsterForm = this.fb.group({
-      name: ["", Validators.required],
-      size: [""],
-      monsterType: [""],
+      name: [this.monster.name],
+      size: [this.monster.size],
+      monsterType: [this.monster.monsterType],
       languages: this.fb.array([]),
       tags: this.fb.array([]),
-      alignment: [""],
-      armourClass: ["", Validators.required],
-      armourType: [""],
-      hitPoints: ["", Validators.required],
-      hpFormula: [""],
+      alignment: [this.monster.alignment],
+      armourClass: [this.monster.armourClass, Validators.required],
+      armourType: [this.monster.armourType],
+      hitPoints: [this.monster.hitPoints, Validators.required],
+      hpFormula: [this.monster.hpFormula],
       speed: this.fb.array([]),
-      stats: ["", Validators.required],
+      stats: [this.monster.stats, Validators.required],
       resistances: this.fb.array([]),
       immunities: this.fb.array([]),
       conditionImmunities: this.fb.array([]),
       vulnerabilities: this.fb.array([]),
       skills: this.fb.array([]),
-      challengeRating: ["", Validators.required],
+      challengeRating: [this.monster.challengeRating, Validators.required],
       traits: this.fb.array([]),
       actions: this.fb.array([]),
-      fluff: [""],
+      fluff: [this.monster.fluff],
     });
 
-    //for (let i = 0; i < this.monster.skills.length; i++) {
-    //  const element = this.monster.skills[i];
-    //  this.addSkill(element.skillName, element.skillMod);
-    //}
-    //for (let i = 0; i < this.monster.actions.length; i++) {
-    //  const element = this.monster.actions[i];
-    //  this.addAction(element.name, element.type, element.description);
-    //}
-    //for (let i = 0; i < this.monster.traits.length; i++) {
-    //  const element = this.monster.traits[i];
-    //  this.addTrait(element.name, element.description);
-    //}
-    //for (let i = 0; i < this.monster.languages.length; i++) {
-    //  const element = this.monster.languages[i];
-    //  this.addLanguage(element);
-    //}
-
-
-
-
+    for (let i = 0; i < this.monster.speed.length; i++) {
+      const element = this.monster.speed[i];
+      this.addSpeed(element.speedName, element.speedValue);
+    }
+    for (let i = 0; i < this.monster.skills.length; i++) {
+      const element = this.monster.skills[i];
+      this.addSkill(element.skillName, element.skillMod);
+    }
+    for (let i = 0; i < this.monster.actions.length; i++) {
+      const element = this.monster.actions[i];
+      this.addAction(element.name, element.type, element.description);
+    }
+    for (let i = 0; i < this.monster.traits.length; i++) {
+      const element = this.monster.traits[i];
+      this.addTrait(element.name, element.description);
+    }
+    for (let i = 0; i < this.monster.languages.length; i++) {
+      const element = this.monster.languages[i];
+      this.addLanguage(element);
+    }
+    for (let i = 0; i < this.monster.tags.length; i++) {
+      const element = this.monster.tags[i];
+      this.addTag(element);
+    }
+    for (let i = 0; i < this.monster.resistances.length; i++) {
+      const element = this.monster.resistances[i];
+      this.addResistance(element);
+    }
+    for (let i = 0; i < this.monster.immunities.length; i++) {
+      const element = this.monster.immunities[i];
+      this.addImmunity(element);
+    }
+    for (let i = 0; i < this.monster.conditionImmunities.length; i++) {
+      const element = this.monster.conditionImmunities[i];
+      this.addConditionImmunity(element);
+    }
+    
+    for (let i = 0; i < this.monster.vulnerabilities.length; i++) {
+      const element = this.monster.vulnerabilities[i];
+      this.addVulnerability(element);
+    }
   }
 
 
@@ -166,6 +182,8 @@ export class MonsterCreationComponent implements OnInit {
     vulnerabilities.push(this.fb.control(vulnerability));
   }
 
-
+  submitForm(){
+    //TODO
+  }
 
 }

@@ -1,8 +1,12 @@
-<div *ngIf="monster$ | async; else loading">
+<div *ngIf="monster ; else loading">
     <div [formGroup]="monsterForm">
-        <input formControlName="name">
+        <input class="form-control" formControlName="name">
+        <input class="form-control" formControlName="size">
+        <input class="form-control" formControlName="monsterType">
+        <input class="form-control" formControlName="alignement">
     </div>
 </div>
+<button type="button" (click)="submitForm()"></button>
 
 
 <ng-template #loading>
