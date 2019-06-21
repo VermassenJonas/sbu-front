@@ -6,7 +6,7 @@ import { MonsterCreationComponent } from './components/monster-creation/monster-
 const routes: Routes = [
   { path: 'monster-list', component: MonsterListComponent },
   { path: 'monster-edit/:id', component: MonsterCreationComponent },
-  { path: '', redirectTo: 'monster-list', pathMatch: 'full'}
+  { path: '', redirectTo: 'monster-edit/1', pathMatch: 'full'}
 ];
 
 @NgModule({

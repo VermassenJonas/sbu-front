@@ -1,3 +1,10 @@
-<form>
-  
-</form>
+<div *ngIf="monster$ | async; else loading">
+    <div [formGroup]="monsterForm">
+        <input formControlName="name">
+    </div>
+</div>
+
+
+<ng-template #loading>
+    Loading...
+  </ng-template>
