@@ -110,5 +110,13 @@ export class Monster {
             lastUpdated: this.lastUpdated,
         };
     }
+    constructor(){
+        this.speed = [];
+        this.skills = [];
+        this.stats = new Statline();
+        this.author = new User();
+        this.traits = [];
+        this.actions = [];
+    }
 
 }

@@ -183,7 +183,10 @@ export class MonsterCreationComponent implements OnInit {
   }
 
   submitForm(){
-    //TODO
+    let monster = new Monster();
+    monster.id = this.id;
+    monster.name = this.monsterForm.value.name;
+    this.monsterDataService.updateMonster(monster);
   }
 
 }

@@ -25,4 +25,7 @@ export class User {
             collection: this.collection.map(monster => monster.toJSON())
         };
     }
+    constructor(){
+        this.collection = [];
+    }
 }

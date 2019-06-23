@@ -29,6 +29,9 @@ export class MonsterDataService {
     return this.http.post(`${environment.apiUrl}/monster/`, monster.toJSON());
   }
   updateMonster(monster: Monster) {
-    return this.http.put(`${environment.apiUrl}/monster/${monster.id}`, monster.toJSON());
+    console.log(monster.toJSON())
+    let url = `${environment.apiUrl}/monster/${monster.id}`;
+    console.log("put call to " + url);
+    return this.http.put(url, monster.toJSON()).subscribe();
   }
 }

@@ -7,21 +7,23 @@ import { AppComponent } from './app.component';
 import { MonsterListComponent } from './components/monster-list/monster-list.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MonsterCreationComponent } from './components/monster-creation/monster-creation.component';
-import { UserModule } from './user/user.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MonsterListComponent,
     NavbarComponent,
-    MonsterCreationComponent
+    MonsterCreationComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    UserModule,
     ReactiveFormsModule
   ],
   providers: [],

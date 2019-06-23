@@ -1,0 +1,22 @@
+<div class="container">
+  <form [formGroup]="userForm">
+    <div class="container-fluid">
+      <h3>Log in</h3>
+
+      <div class="form-row">
+        <input aria-label="email" placeholder="email" class="form-control col" type="text" formControlName="email">
+      </div>
+      <div class="form-row">
+        <input aria-label="password" placeholder="password" class="form-control col" type="password"
+          formControlName="password">
+      </div>
+      <div class="form-row">
+
+        <button class="btn btn-primary my-1 col-auto" type="button" (click)="register()">Log in</button>
+        <div class="col"></div>
+        <a class="col-auto my-1" href="/register">Make new account</a>
+      </div>
+    </div>
+
+  </form>
+</div>
