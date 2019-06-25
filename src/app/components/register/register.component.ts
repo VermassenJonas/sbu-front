@@ -19,6 +19,24 @@ export class RegisterComponent implements OnInit {
     this._userForm = v;
   }
 
+  private _emailExists: boolean;
+  public get emailExists(): boolean {
+    return this._emailExists;
+  }
+  public set emailExists(v: boolean) {
+    this._emailExists = v;
+  }
+  
+  private _passwordMismatch : boolean;
+  public get passwordMismatch() : boolean {
+    return this._passwordMismatch;
+  }
+  public set passwordMismatch(v : boolean) {
+    this._passwordMismatch = v;
+  }
+  
+
+
 
   constructor(private authenticationService: AuthenticationService,
     private fb: FormBuilder) { }
@@ -39,9 +57,21 @@ export class RegisterComponent implements OnInit {
     let password = this.userForm.value.password;
     let passwordConfirm = this.userForm.value.passwordConfirm;
 
-    if (password == passwordConfirm) {
-      this.authenticationService.register(name, email, password).subscribe(); //TODO: do smthng with answer
+    if (!this.emailExists) {
+      if (password == passwordConfirm) {
+        this.authenticationService.register(name, email, password).subscribe(); //TODO: do smthng with answer
+      }
     }
 
+  }
+  checkEmail() {
+    this.authenticationService.checkUserNameAvailability(this.userForm.value.email).subscribe(
+      result => this.emailExists = !result
+    );
+  }
+  checkPasswords(){
+    let password = this.userForm.value.password;
+    let passwordConfirm = this.userForm.value.passwordConfirm;
+    this.passwordMismatch = password != passwordConfirm
   }
 }

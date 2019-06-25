@@ -16,6 +16,15 @@ export class LoginComponent implements OnInit {
   public set userForm(v: FormGroup) {
     this._userForm = v;
   }
+  
+  private _badLoginAttempt : boolean;
+  public get badLoginAttempt() : boolean {
+    return this._badLoginAttempt;
+  }
+  public set badLoginAttempt(v : boolean) {
+    this._badLoginAttempt = v;
+  }
+  
 
 
   constructor(private authenticationService: AuthenticationService,
@@ -29,10 +38,14 @@ export class LoginComponent implements OnInit {
   }
 
 
-  register() {
+  login() {
     let email = this.userForm.value.email;
     let password = this.userForm.value.password;
-    this.authenticationService.login(email, password); //TODO : handle return
+    this.authenticationService.login(email, password).subscribe(
+      result => {
+        this.badLoginAttempt = !result;
+      }
+    );
 
 
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -56,6 +56,10 @@ export class AuthenticationService {
         { responseType: 'text' }
       )
       .pipe(
+        catchError(error => {
+          console.log(error);
+          return of(null);
+        }),
         map((token: any) => {
           if (token) {
             localStorage.setItem(this._tokenKey, token);

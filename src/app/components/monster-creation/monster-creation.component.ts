@@ -67,7 +67,14 @@ export class MonsterCreationComponent implements OnInit {
       hitPoints: [this.monster.hitPoints, Validators.required],
       hpFormula: [this.monster.hpFormula],
       speed: this.fb.array([]),
-      stats: [this.monster.stats, Validators.required],
+      stats: this.fb.group({
+        str: [this.monster.stats.str],
+        dex: [this.monster.stats.dex],
+        con: [this.monster.stats.con],
+        wis: [this.monster.stats.wis],
+        int: [this.monster.stats.int],
+        cha: [this.monster.stats.cha]
+      }),
       resistances: this.fb.array([]),
       immunities: this.fb.array([]),
       conditionImmunities: this.fb.array([]),

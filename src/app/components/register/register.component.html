@@ -1,4 +1,4 @@
-<div class="container">  
+<div class="container">
   <form [formGroup]="userForm">
     <div class="container-fluid">
       <h3>Create new user</h3>
@@ -6,13 +6,22 @@
         <input aria-label="name" placeholder="name" class="form-control col" type="text" formControlName="name">
       </div>
       <div class="form-row">
-        <input aria-label="email" placeholder="email" class="form-control col" type="text" formControlName="email">
+        <input aria-label="email" placeholder="email" class="form-control col" type="text" formControlName="email"
+          (change)="checkEmail()">
+      </div>
+      <div *ngIf="emailExists">
+        there is already an account associated with this email adress
       </div>
       <div class="form-row">
-        <input aria-label="password" placeholder="password" class="form-control col" type="password" formControlName="password">
+        <input aria-label="password" placeholder="password" class="form-control col" type="password"
+          formControlName="password" (change)="checkPasswords()">
       </div>
       <div class="form-row">
-        <input aria-label="confirm password" placeholder="confirm password" class="form-control col" type="password" formControlName="passwordConfirm">
+        <input aria-label="confirm password" placeholder="confirm password" class="form-control col" type="password"
+          formControlName="passwordConfirm" (change)="checkPasswords()">
+      </div>
+      <div *ngIf="passwordMismatch">
+        the passwords don't match
       </div>
     </div>
     <button class="btn btn-primary my-1 mx-2" type="button" (click)="register()">register</button>
