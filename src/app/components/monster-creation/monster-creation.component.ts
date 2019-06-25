@@ -47,6 +47,7 @@ export class MonsterCreationComponent implements OnInit {
 
   ngOnInit() {
     this.id = parseInt(this.route.snapshot.paramMap.get("id"));
+    
 
     this.monsterDataService.getMonster(this.id).subscribe(result => {
       this.monster = result[0];
@@ -66,7 +67,7 @@ export class MonsterCreationComponent implements OnInit {
       armourType: [this.monster.armourType],
       hitPoints: [this.monster.hitPoints, Validators.required],
       hpFormula: [this.monster.hpFormula],
-      speed: this.fb.array([]),
+      speeds: this.fb.array([]),
       stats: this.fb.group({
         str: [this.monster.stats.str],
         dex: [this.monster.stats.dex],
@@ -133,8 +134,8 @@ export class MonsterCreationComponent implements OnInit {
 
 
   addSpeed(speedName: string, speedValue: number) {
-    let speed = this.monsterForm.get('speed') as FormArray;
-    speed.push(this.fb.group({
+    let speeds = this.monsterForm.get('speeds') as FormArray;
+    speeds.push(this.fb.group({
       "speedName": [speedName],
       "speedValue": [speedValue]
     }));
@@ -166,27 +167,44 @@ export class MonsterCreationComponent implements OnInit {
 
   addLanguage(language: string) {
     let languages = this.monsterForm.get("languages") as FormArray;
-    languages.push(this.fb.control(language));
+    languages.push(this.fb.group({
+      "language": [language]
+    }));
   }
   addTag(tag: string) {
-    let languages = this.monsterForm.get("tags") as FormArray;
-    languages.push(this.fb.control(tag));
+    let tags = this.monsterForm.get("tags") as FormArray;
+    tags.push(this.fb.group({
+      "tag": [tag]
+    }));
   }
   addResistance(resistance: string) {
     let resistances = this.monsterForm.get("resistances") as FormArray;
-    resistances.push(this.fb.control(resistance));
+    resistances.push(this.fb.group({
+      "resistance": [resistance]
+    }));
   }
   addImmunity(immunity: string) {
     let immunities = this.monsterForm.get("immunities") as FormArray;
-    immunities.push(this.fb.control(immunity));
+    immunities.push(this.fb.group({
+      "immunity": [immunity]
+    }));
   }
   addConditionImmunity(conditionImmunity: string) {
     let conditionImmunities = this.monsterForm.get("conditionImmunities") as FormArray;
-    conditionImmunities.push(this.fb.control(conditionImmunity));
+    conditionImmunities.push(this.fb.group({
+      "conditionImmunity": [conditionImmunity]
+    }));
   }
   addVulnerability(vulnerability: string) {
     let vulnerabilities = this.monsterForm.get("vulnerabilities") as FormArray;
-    vulnerabilities.push(this.fb.control(vulnerability));
+    vulnerabilities.push(this.fb.group({
+      "vulnerability": [vulnerability]
+    }));
+  }
+
+  removeElement(arrayName: string, index : number){
+    let array = this.monsterForm.get(arrayName) as FormArray;
+    array.controls.splice(index,1);
   }
 
   submitForm(){

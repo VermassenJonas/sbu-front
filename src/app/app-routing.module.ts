@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'monster-edit/:id', component: MonsterCreationComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'register', pathMatch: 'full'}
+  { path: '', redirectTo: 'monster-edit/1', pathMatch: 'full'}
 ];
 
 @NgModule({
