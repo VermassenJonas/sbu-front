@@ -48,7 +48,17 @@ export class AuthenticationService {
     return !!localToken ? localToken : '';
   }
 
+
+  
+
+
+
+
+
+
+
   login(email: string, password: string): Observable<boolean> {
+
     return this.http
       .post(
         `${environment.apiUrl}/account`,
@@ -63,6 +73,10 @@ export class AuthenticationService {
         map((token: any) => {
           if (token) {
             localStorage.setItem(this._tokenKey, token);
+            console.log(email);
+            localStorage.setItem("userEmail", email);
+            console.log(localStorage.getItem("userEmail"));
+
             this._user$.next(email);
             return true;
           } else {
@@ -75,6 +89,7 @@ export class AuthenticationService {
   logout() {
     if (this.user$.getValue()) {
       localStorage.removeItem(this._tokenKey);
+      localStorage.removeItem("userEmail");
       this._user$.next(null);
     }
   }
@@ -84,6 +99,7 @@ export class AuthenticationService {
     email: string,
     password: string
   ): Observable<boolean> {
+    console.log(email);
     return this.http
       .post(
         `${environment.apiUrl}/account/register`,
@@ -99,6 +115,10 @@ export class AuthenticationService {
         map((token: any) => {
           if (token) {
             localStorage.setItem(this._tokenKey, token);
+            console.log(email);
+            localStorage.setItem("userEmail", email);
+            console.log(localStorage.getItem("userEmail"));
+
             this._user$.next(email);
             return true;
           } else {

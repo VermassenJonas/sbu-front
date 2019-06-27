@@ -70,7 +70,7 @@ export class Monster {
 
         return monster;
     }
-    toJSON(): any {
+    toJSON(email : string): any {
         let jSpeeds;
         for (let i = 0; i < this.speed.length; i++) {
             jSpeeds[this.speed[i].speedName] = this.speed[i].speedValue;
@@ -104,6 +104,7 @@ export class Monster {
             actions: this.actions.map(action => action.toJSON()),
             fluff: this.fluff,
             author: this.author.toJSON(),
+            authorEmail: email,
             created: this.created,
             lastUpdated: this.lastUpdated,
         };

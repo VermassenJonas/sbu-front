@@ -22,7 +22,7 @@ export class User {
             name: this.name,
             email: this.email,
             joinDate: this.joinDate,
-            collection: this.collection.map(monster => monster.toJSON())
+            collection: this.collection.map(monster => monster.toJSON(this.email))
         };
     }
     constructor(){
