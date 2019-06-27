@@ -1,0 +1,76 @@
+<div class="container">
+
+  <div *ngIf="monster ; else loading" class="card">
+    <div class="card-body">
+      <div>
+        <h4>{{monster.name}}</h4>
+      </div>
+      <div>
+        {{monster.monsterType}}, {{monster.alignment}}
+      </div>
+      <div>
+        <span>tags: </span>
+        <span *ngFor="let tag of monster.tags">
+          {{tag}}
+        </span>
+      </div>
+      <div>
+        Armor class: {{monster.armourClass}} ({{monster.armourType}})
+      </div>
+      <div>
+        Hit points: {{monster.hitpoints}} ({{monster.hpFormula}})
+      </div>
+      <div>
+        Speed: <span *ngFor="let speed of monster.speed">({{speed.speedName}}: {{speed.speedValue}})</span>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>STR</th>
+            <th>DEX</th>
+            <th>CON</th>
+            <th>INT</th>
+            <th>WIS</th>
+            <th>CHA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{monster.stats.str}}</td>
+            <td>{{monster.stats.dex}}</td>
+            <td>{{monster.stats.con}}</td>
+            <td>{{monster.stats.wis}}</td>
+            <td>{{monster.stats.int}}</td>
+            <td>{{monster.stats.cha}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        Skills: <span *ngFor="let skill of monster.skills">({{skill.skillName}}: {{skill.skillMod}}) </span>
+      </div>
+      <div>
+        Languages: <span *ngFor="let language of monster.languages">{{language}} </span>
+      </div>
+      <div>
+        Challenge rating: {{monster.challengeRating}}
+      </div>
+      <h5>Traits</h5>
+      <div *ngFor="let trait of monster.traits" class="card">
+        <div class="card-body">
+          <h6>{{trait.name}}</h6>
+          <p>{{trait.description}}</p>
+        </div>
+      </div>
+      <h5>Actions</h5>
+      <div *ngFor="let action of monster.actions" class="card">
+        <div class="card-body">
+          <h6>{{action.name}} ({{action.type}})</h6>
+          <p>{{action.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  Loading...
+</ng-template>

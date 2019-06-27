@@ -1,5 +1,26 @@
+<div class="container">
+  <h3>Monsters</h3>
+  <table class="table-bordered table-striped table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>CR</th>
+      <th>HP</th>
+      <th>Author</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let monster of monsters">
+        <td>{{monster.name}}</td>
+        <td>{{monster.monsterType}}</td>
+        <td>{{monster.challengeRating}}</td>
+        <td>{{monster.hitpoints}}</td>
+        <td>{{monster.author.name}}</td>
+        <td> <a href="monster-detail/{{monster.id}}">view</a></td>
 
+      </tr>
+    </tbody>
+  </table>
 
-<ul *ngFor="let monster of (monsters$ |async )">
-    
-</ul>
+  
+</div>

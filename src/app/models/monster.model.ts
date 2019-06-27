@@ -15,7 +15,7 @@ export class Monster {
     public alignment: string;
     public armourClass: number;
     public armourType: string;
-    public hitPoints: number;
+    public hitpoints: number;
     public hpFormula: string;
     public speed: Speed[];
     public stats: Statline;
@@ -33,8 +33,6 @@ export class Monster {
     public lastUpdated: Date;
 
     static fromJSON(json: any): Monster {
-        console.log(json);
-        console.log(json.stats);
         let monster = new Monster();
         monster.id = json.id;
         monster.name = json.name;
@@ -45,7 +43,7 @@ export class Monster {
         monster.alignment = json.alignment;
         monster.armourClass = json.armourClass;
         monster.armourType = json.armourType;
-        monster.hitPoints = json.hitPoints;
+        monster.hitpoints = json.hitpoints;
         monster.hpFormula = json.hpFormula;
         monster.speed = [];
         monster.stats = Statline.fromJSON(json.stats);
@@ -92,7 +90,7 @@ export class Monster {
             alignment: this.alignment,
             armourClass: this.armourClass,
             armourType: this.armourType,
-            hitPoints: this.hitPoints,
+            hitPoints: this.hitpoints,
             hpFormula: this.hpFormula,
             speed: jSpeeds,
             stats: this.stats.toJSON(),

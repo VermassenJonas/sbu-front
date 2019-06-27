@@ -46,13 +46,24 @@ export class MonsterCreationComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.id = parseInt(this.route.snapshot.paramMap.get("id"));
-    
 
-    this.monsterDataService.getMonster(this.id).subscribe(result => {
-      this.monster = result[0];
-      this.buildForm();
-    });
+    let id = this.route.snapshot.paramMap.get("id");
+    if (0 != parseInt(id)) {
+      this.id = parseInt(id);
+      this.monsterDataService.getMonster(this.id).subscribe(result => {
+        this.monster = Monster.fromJSON(result[0]);
+
+        this.buildForm();
+      });
+    } else {
+      this.monsterDataService.addNewMonster(new Monster()).subscribe(result => {
+        let monster = Monster.fromJSON(result)
+        this.id = monster.id;
+        this.monster = monster;
+      });
+    }
+
+
   }
 
   buildForm() {
@@ -65,7 +76,7 @@ export class MonsterCreationComponent implements OnInit {
       alignment: [this.monster.alignment],
       armourClass: [this.monster.armourClass, Validators.required],
       armourType: [this.monster.armourType],
-      hitPoints: [this.monster.hitPoints, Validators.required],
+      hitPoints: [this.monster.hitpoints, Validators.required],
       hpFormula: [this.monster.hpFormula],
       speeds: this.fb.array([]),
       stats: this.fb.group({
@@ -123,7 +134,7 @@ export class MonsterCreationComponent implements OnInit {
       const element = this.monster.conditionImmunities[i];
       this.addConditionImmunity(element);
     }
-    
+
     for (let i = 0; i < this.monster.vulnerabilities.length; i++) {
       const element = this.monster.vulnerabilities[i];
       this.addVulnerability(element);
@@ -202,12 +213,12 @@ export class MonsterCreationComponent implements OnInit {
     }));
   }
 
-  removeElement(arrayName: string, index : number){
+  removeElement(arrayName: string, index: number) {
     let array = this.monsterForm.get(arrayName) as FormArray;
-    array.controls.splice(index,1);
+    array.controls.splice(index, 1);
   }
 
-  submitForm(){
+  submitForm() {
     let monster = new Monster();
     monster.id = this.id;
     monster.name = this.monsterForm.value.name;

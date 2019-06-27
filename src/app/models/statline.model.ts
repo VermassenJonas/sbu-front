@@ -70,7 +70,6 @@ export class Statline {
     constructor() { }
 
     static fromJSON(json: any): Statline {
-        console.log(json);
         const stat = new Statline();
         stat.id = json.id;
         stat.str = json.str;

@@ -10,17 +10,23 @@ import { Monster } from 'src/app/models/monster.model';
 })
 export class MonsterListComponent implements OnInit {
 
-  private fetchMonsters$: Observable<Monster[]> = this.monsterDataService.monsters$;
+  
+  private _monsters : Monster[];
+  public get monsters() : Monster[] {
+    return this._monsters;
+  }
+  public set monsters(v : Monster[]) {
+    this._monsters = v;
+  }
 
-    constructor( private monsterDataService : MonsterDataService) { 
+  constructor(private monsterDataService: MonsterDataService) {
 
   }
 
   ngOnInit() {
+    this.monsterDataService.monsters$.subscribe(result => this.monsters = result)
   }
 
 
-  get monsters$(){
-    return this.fetchMonsters$;
-  }
+  
 }

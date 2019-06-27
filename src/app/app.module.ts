@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { httpInterceptorProviders } from './interceptors';
+import { MonsterDetailComponent } from './components/monster-detail/monster-detail.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { httpInterceptorProviders } from './interceptors';
     NavbarComponent,
     MonsterCreationComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    MonsterDetailComponent
   ],
   imports: [
     BrowserModule,
