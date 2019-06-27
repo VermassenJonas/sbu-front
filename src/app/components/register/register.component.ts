@@ -59,7 +59,9 @@ export class RegisterComponent implements OnInit {
 
     if (!this.emailExists) {
       if (password == passwordConfirm) {
-        this.authenticationService.register(name, email, password).subscribe(); //TODO: do smthng with answer
+        this.authenticationService.register(name, email, password).subscribe(
+          result => window.location.assign("/monster-list")
+        ); //TODO: do smthng with answer
       }
     }
 

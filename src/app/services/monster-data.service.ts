@@ -19,13 +19,20 @@ export class MonsterDataService {
 
   get monsters$(): Observable<Monster[]> {
     return this.http.get(`${environment.apiUrl}/monster/`).pipe(
-
+      map((list: any[]): Monster[] => list.map(Monster.fromJSON))
+    );
+  }
+  get collection$(): Observable<Monster[]> {
+    return this.http.get(`${environment.apiUrl}/monster/collection/${localStorage.getItem("userEmail")}`).pipe(
       map((list: any[]): Monster[] => list.map(Monster.fromJSON))
     );
   }
   getMonster = function (id: number): Observable<Monster> {
     return this.http.get(`${environment.apiUrl}/monster/${id}`);
   }
+
+  
+
   addNewMonster(monster: Monster) {
     let email = localStorage.getItem("userEmail");
     console.log(email);

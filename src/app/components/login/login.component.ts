@@ -44,6 +44,9 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(email, password).subscribe(
       result => {
         this.badLoginAttempt = !result;
+        if(result){
+          window.location.assign("/monster-list"); 
+        }
       }
     );
 

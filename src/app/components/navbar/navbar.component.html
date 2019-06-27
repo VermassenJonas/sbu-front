@@ -7,19 +7,33 @@
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">My collection</a>
+        <a class="nav-link" href="/my-collection">My collection</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/monster-create">Create new monster</a>
       </li>
     </ul>
-    <ul class="navbar-nav">
+    <div *ngIf="loggedIn else loginblock">
+      <ul class="navbar-nav"  >
         <li class="nav-item">
-          <a class="nav-link" href="/login">Log in</a>
+          <span class="navbar-text" >{{authService.user$ | async}}</span>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/register">Register</a>
+          <button class="nav-link btn btn-link" (click)="logOut()">Log out</button>
         </li>
       </ul>
+    </div>
+    
   </div>
 </nav>
+
+<ng-template #loginblock>
+  <ul class="navbar-nav"  >
+    <li class="nav-item">
+      <a class="nav-link" href="/login">Log in</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/register">Register</a>
+    </li>
+  </ul>
+</ng-template>

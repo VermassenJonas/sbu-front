@@ -1,1 +1,286 @@
-Loading...
+<div class="container">
+  <div *ngIf="monsterForm ; else loading">
+
+      <h3>Edit monster</h3>
+      <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <a class="nav-item nav-link active" id="general-head" data-toggle="tab" href="#general-tab" role="tab"
+                  aria-controls="general-tab" aria-selected="true">General</a>
+              <a class="nav-item nav-link" id="race-head" data-toggle="tab" href="#race-tab" role="tab"
+                  aria-controls="race-tab" aria-selected="false">Race</a>
+              <a class="nav-item nav-link" id="core-head" data-toggle="tab" href="#core-tab" role="tab"
+                  aria-controls="core-tab" aria-selected="false">Core</a>
+              <a class="nav-item nav-link" id="defence-head" data-toggle="tab" href="#defence-tab" role="tab"
+                  aria-controls="defence-tab" aria-selected="false">Defence</a>
+              <a class="nav-item nav-link" id="abilities-head" data-toggle="tab" href="#abilities-tab" role="tab"
+                  aria-controls="abilities-tab" aria-selected="false">Abilities</a>
+          </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent" [formGroup]="monsterForm">
+          <div class="tab-pane fade show active" id="general-tab" role="tabpanel" aria-labelledby="general-head">
+              
+              <input aria-label="name" placeholder="name" class="form-control" type="text" formControlName="name">
+              <input aria-label="alignment" placeholder="alignment" class="form-control" type="text"
+                  formControlName="alignment">
+              <input aria-label="challengeRating" placeholder="challenge rating" class="form-control" type="text"
+                  formControlName="challengeRating">
+              <div class="card">
+                  <div class="card-body">
+                      <h5>Tags</h5>
+                      <button type="button" (click)="addTag('')">add tag</button>
+                      <div class="container-fluid" formArrayName="tags"
+                          *ngFor="let tag of monsterForm.get('tags').controls; let i = index;">
+                          <div [formGroupName]="i" class="form-row">
+                              <input aria-label="tag" placeholder="tag" class="form-control col" type="text"
+                                  formControlName="tag">
+                              <button type="button" class="col-auto"
+                                  (click)="removeElement('tags',i)">remove</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+              <textarea aria-label="fluff" formControlName="fluff" placeholder="monster backstory..." class="form-control"></textarea>
+          </div>
+          <div class="tab-pane fade" id="race-tab" role="tabpanel" aria-labelledby="race-head">
+              <input aria-label="size" placeholder="size" class="form-control" type="text" formControlName="size">
+              <input aria-label="monsterType" placeholder="type" class="form-control" type="text"
+                  formControlName="monsterType">
+              <div class="card">
+                  <div class="card-body">
+                      <h5>languages</h5>
+                      <button type="button" (click)="addLanguage('')">add language</button>
+                      <div class="container-fluid" formArrayName="languages"
+                          *ngFor="let language of monsterForm.get('languages').controls; let i = index;">
+                          <div [formGroupName]="i" class="form-row">
+                              <input aria-label="language" placeholder="language" class="form-control col" type="text"
+                                  formControlName="language">
+                              <button type="button" class="col-auto"
+                                  (click)="removeElement('languages',i)">remove</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-body">
+                      <h5>speed</h5>
+                      <button type="button" (click)="addSpeed('')">add speed</button>
+                      <div class="container-fluid" formArrayName="speeds"
+                          *ngFor="let speed of monsterForm.get('speeds').controls; let i = index;">
+                          <div [formGroupName]="i" class="form-row">
+                              <input aria-label="speedName" placeholder="speed name" class="form-control col"
+                                  type="text" formControlName="speedName">
+                              <input aria-label="speedValue" placeholder="speed value" class="form-control col"
+                                  type="text" formControlName="speedValue">
+                              <button type="button" class="col-auto"
+                                  (click)="removeElement('speeds',i)">remove</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+
+          </div>
+          <div class="tab-pane fade" id="core-tab" role="tabpanel" aria-labelledby="core-head">
+              <div class="card">
+                  <div class="container-fluid">
+                      <h5>Stats</h5>
+                      <div class="form-row" formGroupName="stats">
+                          <div class="col">
+                              <label>STR</label>
+                              <input aria-label="Strength" class="form-control" type="number" formControlName="str">
+                          </div>
+                          <div class="col">
+                              <label>DEX</label>
+                              <input aria-label="Dexterity" class="form-control" type="number" formControlName="dex">
+                          </div>
+                          <div class="col">
+                              <label>CON</label>
+                              <input aria-label="Constitution" class="form-control" type="number"
+                                  formControlName="con">
+                          </div>
+                          <div class="col">
+                              <label>INT</label>
+                              <input aria-label="Intelligence" class="form-control" type="number"
+                                  formControlName="int">
+                          </div>
+                          <div class="col">
+                              <label>WIS</label>
+                              <input aria-label="Wisdom" class="form-control" type="number" formControlName="wis">
+                          </div>
+                          <div class="col">
+                              <label>CHA</label>
+                              <input aria-label="Charisma" class="form-control" type="number" formControlName="cha">
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-body">
+                      <h5>Skills</h5>
+                      <button type="button" (click)="addSkill('')">add skill</button>
+                      <div class="container-fluid" formArrayName="skills"
+                          *ngFor="let skill of monsterForm.get('skills').controls; let i = index;">
+                          <div [formGroupName]="i" class="form-row">
+                              <input aria-label="skill name" placeholder="skill name" class="form-control col"
+                                  type="text" formControlName="skillName">
+                              <input aria-label="skill modifier" placeholder="0 " class="form-control col"
+                                  type="number" formControlName="skillMod">
+                              <button type="button" class="col-auto"
+                                  (click)="removeElement('skills',i)">remove</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane fade" id="defence-tab" role="tabpanel" aria-labelledby="defence-head">
+              <div class="card">
+                  <div class="card-body">
+                      <h5>Armour</h5>
+                      <input aria-label="armour class" type="number" placeholder="5-25" formControlName="armourClass">
+                      <input aria-label="armour type" type="text" placeholder="e.g. leather armour"
+                          formControlName="armourType">
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-body">
+                      <h5>Hit points</h5>
+                      <input aria-label="hit points" type="number" placeholder="amount" formControlName="hitPoints">
+                      <input aria-label="hit point formula" type="text" placeholder="formula"
+                          formControlName="hpFormula">
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-body">
+                      <h5>Damage vulnerabilities</h5>
+                      <button type="button" (click)="addVulnerability('')">add vulnerability</button>
+                      <div class="container-fluid" formArrayName="vulnerabilities"
+                          *ngFor="let vulnerability of monsterForm.get('vulnerabilities').controls; let i = index;">
+                          <div [formGroupName]="i" class="form-row">
+                              <input aria-label="vulnerability" placeholder="vulnerability" class="form-control col"
+                                  type="text" formControlName="vulnerability">
+                              <button type="button" class="col-auto"
+                                  (click)="removeElement('vulnerabilities',i)">remove</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-body">
+                      <h5>Damage resistances</h5>
+                      <button type="button" (click)="addResistance('')">add resistance</button>
+                      <div class="container-fluid" formArrayName="resistances"
+                          *ngFor="let resistance of monsterForm.get('resistances').controls; let i = index;">
+                          <div [formGroupName]="i" class="form-row">
+                              <input aria-label="resistance" placeholder="resistance" class="form-control col"
+                                  type="text" formControlName="resistance">
+                              <button type="button" class="col-auto"
+                                  (click)="removeElement('resistances',i)">remove</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-body">
+                      <h5>Damage immunities</h5>
+                      <button type="button" (click)="addImmunity('')">add immunity</button>
+                      <div class="container-fluid" formArrayName="immunities"
+                          *ngFor="let immunity of monsterForm.get('immunities').controls; let i = index;">
+                          <div [formGroupName]="i" class="form-row">
+                              <input aria-label="immunity" placeholder="immunity" class="form-control col" type="text"
+                                  formControlName="immunity">
+                              <button type="button" class="col-auto"
+                                  (click)="removeElement('immunities',i)">remove</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-body">
+                      <h5>Comdition immunities</h5>
+                      <button type="button" (click)="addConditionImmunity('')">add immunity</button>
+                      <div class="container-fluid" formArrayName="conditionImmunities"
+                          *ngFor="let conditionImmunity of monsterForm.get('conditionImmunities').controls; let i = index;">
+                          <div [formGroupName]="i" class="form-row">
+                              <input aria-label="condition immunity" placeholder="condition immunity"
+                                  class="form-control col" type="text" formControlName="conditionImmunity">
+                              <button type="button" class="col-auto"
+                                  (click)="removeElement('conditionImmunities',i)">remove</button>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+          <div class="tab-pane fade" id="abilities-tab" role="tabpanel" aria-labelledby="abilities-head">
+              <div class="card">
+                  <div class="card-body">
+                      <h5>Traits</h5>
+                      <button type="button" (click)="addTrait('')">add trait</button>
+                      <div class="container-fluid" formArrayName="traits"
+                          *ngFor="let trait of monsterForm.get('traits').controls; let i = index;">
+                          <div [formGroupName]="i">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <input aria-label="trait name" placeholder="name trait" class="form-control"
+                                          type="text" formControlName="name">
+                                      <textarea aria-label="trait description" placeholder="description trait"
+                                          class="form-control" type="text" formControlName="description"></textarea>
+
+                                      <button type="button" class=""
+                                          (click)="removeElement('traits',i)">remove</button>
+                                  </div>
+                              </div>
+
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-body">
+                      <h5>Actions</h5>
+                      <button type="button" (click)="addAction('')">add action</button>
+                      <div class="container-fluid" formArrayName="actions"
+                          *ngFor="let action of monsterForm.get('actions').controls; let i = index;">
+                          <div [formGroupName]="i">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <input aria-label="name action" placeholder="name action" class="form-control"
+                                          type="text" formControlName="name">
+                                      <textarea aria-label="action description" placeholder="description action"
+                                          class="form-control" type="text" formControlName="description"></textarea>
+                                      <select aria-label="type of action" formControlName="type">
+                                          <option>action</option>
+                                          <option>bonus action</option>
+                                          <option>reaction</option>
+                                          <option>legendary action</option>
+                                      </select>
+
+                                      <button type="button" class=""
+                                          (click)="removeElement('actions',i)">remove</button>
+                                  </div>
+                              </div>
+
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+
+  </div>
+  <button type="button" (click)="submitForm()">submit</button>
+</div>
+
+
+<ng-template #loading>
+  Loading...
+</ng-template>

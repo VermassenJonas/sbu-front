@@ -6,12 +6,14 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { MonsterDetailComponent } from './components/monster-detail/monster-detail.component';
 import { MonsterEditComponent } from './components/monster-edit/monster-edit.component';
+import { CollectionComponent } from './components/collection/collection.component';
 
 const routes: Routes = [
   { path: 'monster-list', component: MonsterListComponent },
   { path: 'monster-detail/:id', component: MonsterDetailComponent },
   { path: 'monster-edit/:id', component: MonsterEditComponent },
   { path: 'monster-create', component: MonsterCreationComponent },
+  { path: 'my-collection', component: CollectionComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'monster-list', pathMatch: 'full'}
