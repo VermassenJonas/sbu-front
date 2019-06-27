@@ -12,6 +12,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { httpInterceptorProviders } from './interceptors';
 import { MonsterDetailComponent } from './components/monster-detail/monster-detail.component';
+import { MonsterEditComponent } from './components/monster-edit/monster-edit.component';
+import { CollectionComponent } from './components/collection/collection.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { MonsterDetailComponent } from './components/monster-detail/monster-deta
     MonsterCreationComponent,
     RegisterComponent,
     LoginComponent,
-    MonsterDetailComponent
+    MonsterDetailComponent,
+    MonsterEditComponent,
+    CollectionComponent
   ],
   imports: [
     BrowserModule,

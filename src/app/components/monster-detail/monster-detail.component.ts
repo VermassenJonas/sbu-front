@@ -36,7 +36,7 @@ export class MonsterDetailComponent implements OnInit {
     let id = this.route.snapshot.paramMap.get("id");
     this.id = parseInt(id);
     this.monsterDataService.getMonster(this.id).subscribe(result => {
-      this.monster = Monster.fromJSON(result[0]);
+      this.monster = Monster.fromJSON(result);
     });
   }
 

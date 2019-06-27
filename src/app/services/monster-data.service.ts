@@ -24,8 +24,7 @@ export class MonsterDataService {
     );
   }
   getMonster = function (id: number): Observable<Monster> {
-    return this.http.get(`${environment.apiUrl}/monster/`).pipe(
-    );
+    return this.http.get(`${environment.apiUrl}/monster/${id}`);
   }
   addNewMonster(monster: Monster) {
     let email = localStorage.getItem("userEmail");
