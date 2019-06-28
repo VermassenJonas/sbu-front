@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Monster } from 'src/app/models/monster.model';
 import { ActivatedRoute } from '@angular/router';
 import { MonsterDataService } from 'src/app/services/monster-data.service';
+import { Statline } from 'src/app/models/statline.model';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-monster-edit',
@@ -39,21 +41,25 @@ export class MonsterEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private monsterDataService: MonsterDataService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private authService: AuthenticationService) { }
 
   ngOnInit() {
+    let email = this.authService.email;
+    if (!!email) {
+      let id = this.route.snapshot.paramMap.get("id");
 
-    let id = this.route.snapshot.paramMap.get("id");
-
-    this.id = parseInt(id);
-    this.monsterDataService.getMonster(this.id).subscribe(result => {
-      this.monster = Monster.fromJSON(result);
-
-      this.buildForm();
-    });
-
-
-
+      this.id = parseInt(id);
+      this.monsterDataService.getMonster(this.id).subscribe(result => {
+        this.monster = Monster.fromJSON(result);
+        if(this.monster.author.email != email){
+          window.location.assign("/login");
+        }
+        this.buildForm();
+      });
+    }else{
+      window.location.assign("/login");
+    }
   }
 
   buildForm() {
@@ -209,11 +215,34 @@ export class MonsterEditComponent implements OnInit {
   }
 
   submitForm() {
-    let monster = new Monster();
-    monster.id = this.id;
-    monster.name = this.monsterForm.value.name;
+    let monster = this.formToMonster(this.monsterForm);
     this.monsterDataService.updateMonster(monster);
   }
 
+  formToMonster(monsterForm: FormGroup): Monster {
+    let monster = new Monster();
+    monster.name = monsterForm.value.name;
+    monster.size = monsterForm.value.size;
+    monster.monsterType = monsterForm.value.monsterType;
+    monster.languages = monsterForm.value.languages;
+    monster.tags = monsterForm.value.tags;
+    monster.alignment = monsterForm.value.alignment;
+    monster.armourClass = monsterForm.value.armourClass;
+    monster.armourType = monsterForm.value.armourType;
+    monster.hitpoints = monsterForm.value.hitPoints;
+    monster.hpFormula = monsterForm.value.hpFormula;
+    monster.speed = monsterForm.value.speeds;
+    monster.stats = Statline.fromJSON(monsterForm.value.stats)
+    monster.resistances = monsterForm.value.resistances;
+    monster.immunities = monsterForm.value.immunities;
+    monster.conditionImmunities = monsterForm.value.conditionImmunities;
+    monster.vulnerabilities = monsterForm.value.vulnerabilities;
+    monster.skills = monsterForm.value.skills;
+    monster.challengeRating = monsterForm.value.challengeRating;
+    monster.traits = monsterForm.value.traits;
+    monster.actions = monsterForm.value.actions;
+    monster.fluff = monsterForm.value.fluff;
+    return monster;
+  }
 
 }

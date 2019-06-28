@@ -5,6 +5,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Statline } from 'src/app/models/statline.model';
+import { Action } from 'src/app/models/action.model';
+import { Trait } from 'src/app/models/trait.model';
 
 @Component({
   selector: 'app-monster-creation',
@@ -40,9 +42,14 @@ export class MonsterCreationComponent implements OnInit {
 
   constructor(
     private monsterDataService: MonsterDataService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private authService : AuthenticationService) { }
 
   ngOnInit() {
+
+    if(!this.authService.email){
+      window.location.assign("/login");
+    }
 
     this.buildForm();
 
@@ -187,8 +194,8 @@ export class MonsterCreationComponent implements OnInit {
     monster.vulnerabilities = monsterForm.value.vulnerabilities;
     monster.skills = monsterForm.value.skills;
     monster.challengeRating = monsterForm.value.challengeRating;
-    monster.traits = monsterForm.value.traits;
-    monster.actions = monsterForm.value.actions;
+    monster.traits = Trait.fromFormArray(monsterForm.value.traits);
+    monster.actions = Action.fromFormArray(monsterForm.value.actions);
     monster.fluff = monsterForm.value.fluff;
     return monster;
   }

@@ -45,13 +45,13 @@ export class Monster {
         monster.armourType = json.armourType;
         monster.hitpoints = json.hitpoints;
         monster.hpFormula = json.hpFormula;
-        monster.speed = [];
+        monster.speed = Speed.fromJSONArray(json.speeds);
         monster.stats = Statline.fromJSON(json.stats);
         monster.resistances = json.resistances;
         monster.immunities = json.immunities;
         monster.conditionImmunities = json.conditionImmunities;
         monster.vulnerabilities = json.vulnerabilities;
-        monster.skills = [];
+        monster.skills = Skill.fromJSONArray(json.skills);
         monster.challengeRating = json.challengeRating;
         monster.traits = json.traits.map(trait => Trait.fromJSON(trait));
         monster.actions = json.actions.map(action => Action.fromJSON(action));
@@ -60,59 +60,48 @@ export class Monster {
         monster.created = json.created;
         monster.lastUpdated = json.lastUpdated;
 
-        Object.keys(json.speed).forEach(function (key, index) {
-            monster.speed.push(new Speed(key, json.speed[key]))
-        });
-
-        Object.keys(json.skills).forEach(function (key, index) {
-            monster.skills.push(new Skill(key, json.skills[key]))
-        });
-
         return monster;
     }
     toJSON(email: string): any {
         console.log(this);
-        let jSpeeds = [];
-        if (this.speed) {
-            for (let i = 0; i < this.speed.length; i++) {
-                jSpeeds[this.speed[i].speedName] = this.speed[i].speedValue;
-            }
-        }
-        let jSkills = [];
-        if (this.skills) {
-            for (let i = 0; i < this.skills.length; i++) {
-                jSkills[this.skills[i].skillName] = this.skills[i].skillMod;
-            }
-        }
+        
 
-        return {
-            id: this.id? this.id:null,
-            name: this.name? this.name:null,
-            size: this.size? this.size:null,
-            monsterType: this.monsterType? this.monsterType:null,
-            languages: this.languages? this.languages:null,
-            tags: this.tags? this.tags:null,
-            alignment: this.alignment? this.alignment:null,
-            armourClass: this.armourClass? this.armourClass:null,
-            armourType: this.armourType? this.armourType:null,
-            hitpoints: this.hitpoints? this.hitpoints:null,
-            hpFormula: this.hpFormula? this.hpFormula:null,
-            speed: this.speed? jSpeeds:null,
-            stats: this.stats? this.stats.toJSON():null,
-            resistances: this.resistances? this.resistances:null,
-            immunities: this.immunities? this.immunities:null,
-            conditionImmunities: this.conditionImmunities? this.conditionImmunities:null,
-            vulnerabilities: this.vulnerabilities? this.vulnerabilities:null,
-            skills: this.skills? jSkills:null,
-            challengeRating: this.challengeRating? this.challengeRating:null,
-            traits: this.traits? this.traits.map(trait => trait.toJSON()):null,
-            actions: this.actions? this.actions.map(action => action.toJSON()):null,
-            fluff: this.fluff? this.fluff:null,
-            author: this.author? this.author.toJSON():null,
-            authorEmail: email? email:null,
-            created: this.created? this.created:null,
-            lastUpdated: this.lastUpdated? this.lastUpdated:null,
+        let result = {
+            id: this.id? this.id:0,
+            name: this.name? this.name:"",
+            size: this.size? this.size:"",
+            monsterType: this.monsterType? this.monsterType:"",
+            languages: this.languages? this.languages:[],
+            tags: this.tags? this.tags:[],
+            alignment: this.alignment? this.alignment:"",
+            armourClass: this.armourClass? this.armourClass:0,
+            armourType: this.armourType? this.armourType:"",
+            hitPoints: this.hitpoints? this.hitpoints:0,
+            hpFormula: this.hpFormula? this.hpFormula:"",
+            speeds: this.speed? Speed.toJSONArray(this.speed):[],
+            stats: this.stats? this.stats.toJSON():"",
+            resistances: this.resistances? this.resistances:[],
+            immunities: this.immunities? this.immunities:[],
+            conditionImmunities: this.conditionImmunities? this.conditionImmunities:[],
+            vulnerabilities: this.vulnerabilities? this.vulnerabilities:[],
+            skills: this.skills? Skill.toJSONArray(this.skills): [],
+            challengeRating: this.challengeRating? this.challengeRating:"",
+            traits: this.traits? this.traits.map(trait => trait.toJSON()):[],
+            actions: this.actions? this.actions.map(action => action.toJSON()):[],
+            fluff: this.fluff? this.fluff:"",
+            author: this.author? this.author.toJSON():"",
+            authorEmail: email? email:"",
         };
+        if(this.created) {
+            result["created"] = this.created
+        }
+        if(this.lastUpdated) {
+            result["lastUpdated"] = this.lastUpdated
+        }
+        
+        
+
+        return result;
     }
     constructor() {
         this.speed = [];

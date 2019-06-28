@@ -4,6 +4,9 @@ export class Speed {
 
 
     
+
+
+    
     private _speedName : string;
     public get speedName() : string {
         return this._speedName;
@@ -25,4 +28,30 @@ export class Speed {
         this._speedName = speedName;
         this._speedValue = speedValue;
     }
+    
+    static fromJSONArray(jsonArray: any[]): Speed[] {
+        let result = [];
+        jsonArray.forEach(json => {
+            result.push(Speed.fromJSON(json));
+        });
+        return result;
+    }
+    static toJSONArray(jsonArray: Speed[]): any[] {
+        let result = [];
+        jsonArray.forEach(speed => {
+            result.push(speed.toJSON());
+        });
+        return result;
+    }
+    static fromJSON(json: any): Speed{
+        return new Speed(json.speedName, json.speedValue);
+    }
+
+    toJSON(){
+        return {
+            speedName : this.speedName,
+            speedValue : this.speedValue
+        }
+    }
+    
 }

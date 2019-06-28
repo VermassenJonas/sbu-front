@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Monster } from 'src/app/models/monster.model';
 import { MonsterDataService } from 'src/app/services/monster-data.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-collection',
@@ -19,15 +20,21 @@ export class CollectionComponent implements OnInit {
     this._monsters = v;
   }
 
-  constructor(private monsterDataService: MonsterDataService) {
+  constructor(private monsterDataService: MonsterDataService,
+              private authService: AuthenticationService) {
 
   }
 
   ngOnInit() {
+
+    if(!this.authService.email){
+      window.location.assign("/login");
+    }
+
     this.monsterDataService.collection$.subscribe(result => this.monsters = result)
 
     this._monsters.forEach(monster => {
-      if(monster.author.email == localStorage.getItem("userEmail")){
+      if(monster.author.email == this.authService.email){
         this._myMonsters.push(monster);
       }else{
         this._likedMonsters.push(monster);

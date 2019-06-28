@@ -24,7 +24,7 @@ export class MonsterListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.monsterDataService.monsters$.subscribe(result => this.monsters = result)
+    this.monsterDataService.monsters$.subscribe(result => this.monsters = result.filter(monster => !!monster.name && monster.name != ''));
   }
 
 

@@ -48,6 +48,15 @@ export class AuthenticationService {
     return !!localToken ? localToken : '';
   }
 
+  get email(): string {
+    let parsedToken = parseJwt(this.token);
+    if(parsedToken){
+      return parsedToken.sub;
+    }else{
+      return null;
+    }
+  }
+
 
   
 
@@ -73,9 +82,6 @@ export class AuthenticationService {
         map((token: any) => {
           if (token) {
             localStorage.setItem(this._tokenKey, token);
-            console.log(email);
-            localStorage.setItem("userEmail", email);
-            console.log(localStorage.getItem("userEmail"));
 
             this._user$.next(email);
             return true;
@@ -89,7 +95,6 @@ export class AuthenticationService {
   logout() {
     if (this.user$.getValue()) {
       localStorage.removeItem(this._tokenKey);
-      localStorage.removeItem("userEmail");
       this._user$.next(null);
     }
   }
@@ -115,9 +120,6 @@ export class AuthenticationService {
         map((token: any) => {
           if (token) {
             localStorage.setItem(this._tokenKey, token);
-            console.log(email);
-            localStorage.setItem("userEmail", email);
-            console.log(localStorage.getItem("userEmail"));
 
             this._user$.next(email);
             return true;

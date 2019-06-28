@@ -83,13 +83,13 @@ export class Statline {
 
     toJSON(): any {
         return {
-            id: this.id,
-            str: this.str,
-            dex: this.dex,
-            con: this.con,
-            wis: this.wis,
-            int: this.int,
-            cha: this.cha,
+            id: this.id?this.id:0,
+            str: this.str?this.str:0,
+            dex: this.dex?this.dex:0,
+            con: this.con?this.con:0,
+            wis: this.wis?this.wis:0,
+            int: this.int?this.int:0,
+            cha: this.cha?this.cha:0,
         };
     }
     

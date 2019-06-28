@@ -10,6 +10,15 @@ export class Action{
         private _type : string,
         private _description : string
     ){}
+    
+
+    static fromFormArray(actionForms : any[] ) : Action[]{
+        let result = [];
+        actionForms.forEach(actionForm => {
+            result.push(new Action(0, actionForm.name, actionForm.type, actionForm.description));
+        });
+        return result;
+    }
 
     static fromJSON(json: any): Action {
         const stat = new Action(

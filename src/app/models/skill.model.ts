@@ -23,4 +23,29 @@ export class Skill {
         this._skillMod = skillMod,
         this._skillName = skillName
      }
+
+     static fromJSONArray(jsonArray: any[]): Skill[] {
+        let result = [];
+        jsonArray.forEach(json => {
+            result.push(Skill.fromJSON(json));
+        });
+        return result;
+    }
+    static toJSONArray(jsonArray: Skill[]): any[] {
+        let result = [];
+        jsonArray.forEach(skill => {
+            result.push(skill.toJSON());
+        });
+        return result;
+    }
+    static fromJSON(json: any): Skill{
+        return new Skill(json.skillName, json.skillMod);
+    }
+
+    toJSON(){
+        return {
+            skillName : this.skillName,
+            skillMod : this.skillMod
+        }
+    }
 }

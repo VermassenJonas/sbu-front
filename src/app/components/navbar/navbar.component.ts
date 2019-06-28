@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loggedIn =  localStorage.getItem("userEmail") != null;
+    this.loggedIn = !!this.authService.email;
   }
 
   logOut(){

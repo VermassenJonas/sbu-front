@@ -5,6 +5,14 @@ export class Trait {
         private _description: string
     ) { }
 
+    static fromFormArray(traitForms : any[]): Trait[]{
+        let result = [];
+        traitForms.forEach(traitForm => {
+            result.push(new Trait(0, traitForm.name,  traitForm.description));
+        });
+        return result;
+    }
+
     static fromJSON(json: any): Trait {
         const trait = new Trait(json.id, json.name, json.description);
         return trait;
