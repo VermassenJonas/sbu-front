@@ -42,6 +42,6 @@ export class MonsterDataService {
     let email = this.authService.email;
     console.log(email);
     let url = `${environment.apiUrl}/monster/${monster.id}`;
-    return this.http.put(url, monster.toJSON(email)).subscribe();
+    return this.http.put(url, monster.toJSON(email));
   }
 }

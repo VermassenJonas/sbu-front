@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { MonsterDataService } from 'src/app/services/monster-data.service';
 import { Statline } from 'src/app/models/statline.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Trait } from 'src/app/models/trait.model';
+import { Action } from 'src/app/models/action.model';
 
 @Component({
   selector: 'app-monster-edit',
@@ -216,10 +218,13 @@ export class MonsterEditComponent implements OnInit {
 
   submitForm() {
     let monster = this.formToMonster(this.monsterForm);
-    this.monsterDataService.updateMonster(monster);
+    monster.id = this.id;
+    this.monsterDataService.updateMonster(monster).subscribe(
+      result => window.location.assign("/my-collection")
+    );
   }
 
-  formToMonster(monsterForm: FormGroup): Monster {
+  formToMonster(monsterForm : FormGroup) : Monster{
     let monster = new Monster();
     monster.name = monsterForm.value.name;
     monster.size = monsterForm.value.size;
@@ -239,8 +244,8 @@ export class MonsterEditComponent implements OnInit {
     monster.vulnerabilities = monsterForm.value.vulnerabilities;
     monster.skills = monsterForm.value.skills;
     monster.challengeRating = monsterForm.value.challengeRating;
-    monster.traits = monsterForm.value.traits;
-    monster.actions = monsterForm.value.actions;
+    monster.traits = Trait.fromFormArray(monsterForm.value.traits);
+    monster.actions = Action.fromFormArray(monsterForm.value.actions);
     monster.fluff = monsterForm.value.fluff;
     return monster;
   }
