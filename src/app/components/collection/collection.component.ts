@@ -10,36 +10,57 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class CollectionComponent implements OnInit {
 
-  private _monsters : Monster[];
-  private _myMonsters : Monster[];
-  private _likedMonsters : Monster[];
-  public get monsters() : Monster[] {
+  private _monsters: Monster[];
+  public get monsters(): Monster[] {
     return this._monsters;
   }
-  public set monsters(v : Monster[]) {
+  public set monsters(v: Monster[]) {
     this._monsters = v;
   }
 
+  private _myMonsters: Monster[];
+  public get myMonsters(): Monster[] {
+    return this._myMonsters;
+  }
+  public set myMonsters(v: Monster[]) {
+    this._myMonsters = v;
+  }
+
+  private _likedMonsters: Monster[];
+  public get likedMonsters(): Monster[] {
+    return this._likedMonsters;
+  }
+  public set likedMonsters(v: Monster[]) {
+    this._likedMonsters = v;
+  }
+
+
   constructor(private monsterDataService: MonsterDataService,
-              private authService: AuthenticationService) {
+    private authService: AuthenticationService) {
+      this.monsters = [];
+      this.myMonsters = [];
+      this.likedMonsters = [];
 
   }
 
   ngOnInit() {
 
-    if(!this.authService.email){
+    if (!this.authService.email) {
       window.location.assign("/login");
     }
 
-    this.monsterDataService.collection$.subscribe(result => this.monsters = result)
+    this.monsterDataService.collection$.subscribe(result => {
+      this.monsters = result;
+      console.log(this.monsters);
+      this.monsters.forEach(monster => {
+        if (monster.author.email == this.authService.email) {
+          this.myMonsters.push(monster);
+        } else {
+          this.likedMonsters.push(monster);
+        }
+      });
+    })
 
-    this._monsters.forEach(monster => {
-      if(monster.author.email == this.authService.email){
-        this._myMonsters.push(monster);
-      }else{
-        this._likedMonsters.push(monster);
-      }
-    });
   }
 
 }
