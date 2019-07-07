@@ -10,6 +10,7 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class MonsterDataService {
+  
 
 
 
@@ -23,7 +24,7 @@ export class MonsterDataService {
     );
   }
   get collection$(): Observable<Monster[]> {
-    return this.http.get(`${environment.apiUrl}/monster/collection/${ this.authService.email}`).pipe(
+    return this.http.get(`${environment.apiUrl}/collection/${ this.authService.email}`).pipe(
       map((list: any[]): Monster[] => list.map(Monster.fromJSON))
     );
   }
@@ -35,13 +36,20 @@ export class MonsterDataService {
 
   addNewMonster(monster: Monster) {
     let email =  this.authService.email;
-    console.log(email);
     return this.http.post(`${environment.apiUrl}/monster/`, monster.toJSON(email));
   }
   updateMonster(monster: Monster) {
     let email = this.authService.email;
-    console.log(email);
     let url = `${environment.apiUrl}/monster/${monster.id}`;
     return this.http.put(url, monster.toJSON(email));
+  }
+
+  subscribeToMonster(monster : Monster){
+    let url = `${environment.apiUrl}/collection/${ this.authService.email}`;
+    return this.http.post(url, monster.toJSON(''));
+  }
+  unsubscribeFromMonster(monster : Monster){
+    let url = `${environment.apiUrl}/collection/${ this.authService.email}`;
+    return this.http.put(url, monster.toJSON(''));
   }
 }

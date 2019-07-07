@@ -68,6 +68,15 @@
           <p>{{action.description}}</p>
         </div>
       </div>
+      <div *ngIf="canSubscribe">
+        <div *ngIf="subscribed; else subscribeButton">
+          <button type="button" class="btn btn-outline-danger" (click)="unsubscribe()">Unsubscribe</button>
+        </div>
+        <ng-template #subscribeButton>
+            <button type="button" class="btn btn-outline-success" (click)="subscribe()">Subcribe</button>
+        </ng-template>
+        
+      </div>
     </div>
   </div>
 </div>
